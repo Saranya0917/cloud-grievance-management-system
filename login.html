@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login - Grievance Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1 id="loginTitle">Login</h1>
+
+        <form id="loginForm">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <p id="message"></p>
+
+        <div id="registerLink">
+            <a href="register.html">Create an account</a>
+        </div>
+
+        <div id="forgotPasswordLink" style="display: none;">
+            <a href="forgot-password.html">Forgot Password?</a>
+        </div>
+
+        <a href="index.html">Back to Home</a>
+
+    </div>
+
+
+    <script src="js/auth.js?v=4"></script>
+
+</body>
+
+</html>

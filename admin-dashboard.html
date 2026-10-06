@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Grievance Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+    <style>
+    /* ==========================================
+       ADMIN DASHBOARD
+       FINAL BLUE THEME
+       ========================================== */
+
+    .admin-page {
+        min-height: 100vh;
+        background: #F4F8FB;
+        padding: 40px 20px;
+        color: #243B53;
+    }
+
+    .admin-container {
+        max-width: 1150px;
+        margin: auto;
+    }
+
+
+    /* ==========================================
+       HEADER
+       ========================================== */
+
+    .admin-header {
+        background: #1E4F7A;
+        color: #FFFFFF;
+        padding: 35px;
+        border-radius: 18px;
+        margin-bottom: 28px;
+        box-shadow: 0 10px 25px rgba(30, 79, 122, 0.18);
+    }
+
+    .admin-header h1 {
+        margin: 0 0 8px;
+        font-size: 32px;
+        color: #FFFFFF;
+    }
+
+    .admin-header p {
+        margin: 0;
+        color: #EAF4FB;
+        font-size: 16px;
+    }
+
+
+    /* ==========================================
+       CARDS
+       ========================================== */
+
+    .admin-card {
+        background: #FFFFFF;
+        border: 1px solid #DCEAF5;
+        border-radius: 16px;
+        padding: 28px;
+        margin-bottom: 24px;
+        box-shadow: 0 6px 18px rgba(30, 79, 122, 0.08);
+    }
+
+
+    /* ==========================================
+       CARD HEADER
+       ========================================== */
+
+    .admin-card-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .admin-icon {
+        width: 48px;
+        height: 48px;
+
+        background: #DCEAF5;
+        color: #1E4F7A;
+
+        border-radius: 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 23px;
+    }
+
+    .admin-card h2 {
+        margin: 0;
+        color: #1E4F7A;
+        font-size: 22px;
+    }
+
+    .admin-card p {
+        color: #61788F;
+    }
+
+
+    /* ==========================================
+       ADMIN BUTTONS
+       ========================================== */
+
+    .admin-button {
+        display: inline-block;
+
+        width: auto !important;
+        min-width: 150px;
+
+        background: #1E4F7A;
+        color: #FFFFFF;
+
+        border: none;
+
+        padding: 10px 20px;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        transition: 0.2s ease;
+    }
+
+    .admin-button:hover {
+        background: #163E61;
+        color: #FFFFFF;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* ==========================================
+       FORMS
+       ========================================== */
+
+    .admin-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .admin-form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .admin-form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .admin-form-group label {
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #243B53;
+    }
+
+    .admin-form-group input,
+    .admin-form-group select,
+    .admin-form-group textarea {
+        width: 100%;
+
+        padding: 12px 14px;
+
+        border: 1px solid #BFD5E6;
+
+        border-radius: 9px;
+
+        background: #FFFFFF;
+
+        color: #243B53;
+
+        font-size: 15px;
+
+        outline: none;
+
+        box-sizing: border-box;
+    }
+
+    .admin-form-group input::placeholder,
+    .admin-form-group textarea::placeholder {
+        color: #8AA0B5;
+    }
+
+    .admin-form-group input:focus,
+    .admin-form-group select:focus,
+    .admin-form-group textarea:focus {
+        border-color: #1E4F7A;
+
+        box-shadow:
+            0 0 0 3px rgba(30, 79, 122, 0.12);
+    }
+
+    .admin-form-group textarea {
+        resize: vertical;
+    }
+
+
+    /* ==========================================
+       GRIEVANCE LIST
+       ========================================== */
+
+    .admin-list {
+        margin-top: 20px;
+    }
+
+    #grievancesList {
+        margin-top: 18px;
+    }
+
+    #grievanceDetails {
+        margin-top: 18px;
+    }
+
+
+    /* ==========================================
+       MESSAGES
+       ========================================== */
+
+    #assignMessage,
+    #message {
+        margin-top: 15px;
+        font-weight: 600;
+        color: #1E4F7A;
+    }
+
+
+    /* ==========================================
+       LOGOUT
+       ========================================== */
+
+    .admin-footer {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .admin-logout {
+        width: auto !important;
+        min-width: 100px;
+
+        background: #FFFFFF;
+
+        color: #1E4F7A;
+
+        border: 1px solid #1E4F7A;
+
+        padding: 9px 20px;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        transition: 0.2s ease;
+    }
+
+    .admin-logout:hover {
+        background: #1E4F7A;
+        color: #FFFFFF;
+    }
+
+
+    /* ==========================================
+       RESPONSIVE
+       ========================================== */
+
+    @media (max-width: 700px) {
+
+        .admin-page {
+            padding: 20px 12px;
+        }
+
+        .admin-header {
+            padding: 25px;
+        }
+
+        .admin-header h1 {
+            font-size: 26px;
+        }
+
+        .admin-card {
+            padding: 20px;
+        }
+
+        .admin-form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .admin-form-group.full-width {
+            grid-column: auto;
+        }
+
+        .admin-button {
+            min-width: 140px;
+        }
+    }
+</style>
+
+
+
+<body>
+
+<div class="admin-page">
+
+    <div class="admin-container">
+
+
+        <!-- HEADER -->
+
+        <div class="admin-header">
+
+            <h1>Admin Dashboard</h1>
+
+            <p>
+                Manage grievances, assign staff,
+                and monitor the grievance management system.
+            </p>
+
+        </div>
+
+
+        <!-- ALL GRIEVANCES -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-header">
+
+                <div class="admin-icon">
+                    G
+                </div>
+
+                <div>
+
+                    <h2>
+                        All Grievances
+                    </h2>
+
+                </div>
+
+            </div>
+
+            <p>
+                View and manage all student grievances
+                submitted to the system.
+            </p>
+
+
+        <button
+    type="button"
+    id="loadAllGrievances"
+    class="admin-button">
+
+    View All Grievances
+
+</button>
+
+<div id="allGrievancesList"></div>    
+
+        </div>
+
+
+        <!-- ASSIGN GRIEVANCE -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-header">
+
+                <div class="admin-icon">
+                    A
+                </div>
+
+                <div>
+
+                    <h2>
+                        Assign Grievance
+                    </h2>
+
+                </div>
+
+            </div>
+
+            <p>
+                Assign a grievance to a staff member
+                for further action.
+            </p>
+
+
+            <form id="assignForm">
+
+
+                <div class="admin-form-grid">
+
+
+                    <div class="admin-form-group">
+
+                        <label for="assignGrievanceId">
+
+                            Grievance ID
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="assignGrievanceId"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="admin-form-group">
+
+                        <label for="staffEmail">
+
+                            Staff Email
+
+                        </label>
+
+
+                        <input
+                            type="email"
+                            id="staffEmail"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <br>
+
+
+                <button
+                    type="submit"
+                    class="admin-button">
+
+                    Assign Grievance
+
+                </button>
+
+
+            </form>
+
+
+            <p id="assignMessage"></p>
+
+        </div>
+
+
+        <!-- GRIEVANCE DETAILS -->
+
+        <div class="admin-card">
+
+            <div class="admin-card-header">
+
+                <div class="admin-icon">
+                    V
+                </div>
+
+                <div>
+
+                    <h2>
+                        View Details
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <p>
+                Enter a grievance ID to view
+                its complete details.
+            </p>
+
+
+            <form id="grievanceForm">
+
+
+                <div class="admin-form-grid">
+
+
+                    <div class="admin-form-group">
+
+                        <label for="grievanceId">
+
+                            Grievance ID
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="grievanceId"
+                            required
+                        >
+
+                    </div>
+
+
+                </div>
+
+
+                <br>
+
+
+                <button
+                    type="submit"
+                    class="admin-button">
+
+                    View Details
+
+                </button>
+
+
+            </form>
+
+
+            <div
+                id="grievanceDetails"
+                class="admin-list">
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <div class="admin-footer">
+
+            <button
+                type="button"
+                class="admin-logout"
+                onclick="logout()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- EXISTING JAVASCRIPT -->
+
+<script src="js/auth.js"></script>
+<script src="js/grievance.js"></script>
+<script src="js/guard.js"></script>
+
+
+<script>
+
+    if (!checkDashboardAccess("admin")) {
+
+        throw new Error(
+            "Unauthorized access."
+        );
+
+    }
+
+</script>
+
+
+<script>
+
+function logout() {
+
+    localStorage.removeItem("accessToken");
+
+    localStorage.removeItem("idToken");
+
+    localStorage.removeItem("refreshToken");
+
+    localStorage.removeItem("userEmail");
+
+    window.location.href = "index.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

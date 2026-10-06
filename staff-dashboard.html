@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Staff Dashboard - Grievance Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+    /* ==========================================
+       STAFF DASHBOARD
+       FINAL BLUE THEME
+       ========================================== */
+
+    .staff-page {
+        min-height: 100vh;
+        background: #F4F8FB;
+        padding: 40px 20px;
+        color: #243B53;
+    }
+
+    .staff-container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+
+    /* ==========================================
+       HEADER
+       ========================================== */
+
+    .staff-header {
+        background: #1E4F7A;
+        color: #FFFFFF;
+        padding: 35px;
+        border-radius: 18px;
+        margin-bottom: 28px;
+        box-shadow: 0 10px 25px rgba(30, 79, 122, 0.18);
+    }
+
+    .staff-header h1 {
+        margin: 0 0 8px;
+        font-size: 32px;
+        color: #FFFFFF;
+    }
+
+    .staff-header p {
+        margin: 0;
+        color: #EAF4FB;
+        font-size: 16px;
+    }
+
+
+    /* ==========================================
+       STAFF CARDS
+       ========================================== */
+
+    .staff-card {
+        background: #FFFFFF;
+        border: 1px solid #DCEAF5;
+        border-radius: 16px;
+        padding: 28px;
+        margin-bottom: 24px;
+        box-shadow: 0 6px 18px rgba(30, 79, 122, 0.08);
+    }
+
+
+    /* ==========================================
+       CARD HEADER
+       ========================================== */
+
+    .staff-card-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .staff-icon {
+        width: 48px;
+        height: 48px;
+
+        background: #DCEAF5;
+        color: #1E4F7A;
+
+        border-radius: 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 23px;
+    }
+
+    .staff-card h2 {
+        margin: 0;
+        color: #1E4F7A;
+        font-size: 22px;
+    }
+
+    .staff-card p {
+        color: #61788F;
+    }
+
+
+    /* ==========================================
+       STAFF BUTTONS
+       ========================================== */
+
+    .staff-button {
+        display: inline-block;
+
+        width: auto !important;
+        min-width: 150px;
+
+        background: #1E4F7A;
+        color: #FFFFFF;
+
+        border: none;
+
+        padding: 10px 20px;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        transition: 0.2s ease;
+    }
+
+    .staff-button:hover {
+        background: #163E61;
+        color: #FFFFFF;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* ==========================================
+       FORMS
+       ========================================== */
+
+    .staff-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .staff-form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .staff-form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .staff-form-group label {
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #243B53;
+    }
+
+    .staff-form-group input,
+    .staff-form-group select,
+    .staff-form-group textarea {
+        width: 100%;
+
+        padding: 12px 14px;
+
+        border: 1px solid #BFD5E6;
+
+        border-radius: 9px;
+
+        background: #FFFFFF;
+
+        color: #243B53;
+
+        font-size: 15px;
+
+        outline: none;
+
+        box-sizing: border-box;
+    }
+
+    .staff-form-group input::placeholder,
+    .staff-form-group textarea::placeholder {
+        color: #8AA0B5;
+    }
+
+    .staff-form-group input:focus,
+    .staff-form-group select:focus,
+    .staff-form-group textarea:focus {
+        border-color: #1E4F7A;
+
+        box-shadow:
+            0 0 0 3px rgba(30, 79, 122, 0.12);
+    }
+
+    .staff-form-group textarea {
+        resize: vertical;
+    }
+
+
+    /* ==========================================
+       LISTS
+       ========================================== */
+
+    .staff-list {
+        margin-top: 20px;
+    }
+
+    #assignedGrievancesList,
+    #staffHistoryList {
+        margin-top: 18px;
+    }
+
+
+    /* ==========================================
+       MESSAGES
+       ========================================== */
+
+    #statusMessage,
+    #updateMessage {
+        margin-top: 15px;
+        font-weight: 600;
+        color: #1E4F7A;
+    }
+
+
+    /* ==========================================
+       LOGOUT
+       ========================================== */
+
+    .staff-footer {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .staff-logout {
+        width: auto !important;
+        min-width: 100px;
+
+        background: #FFFFFF;
+
+        color: #1E4F7A;
+
+        border: 1px solid #1E4F7A;
+
+        padding: 9px 20px;
+
+        border-radius: 7px;
+
+        cursor: pointer;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        transition: 0.2s ease;
+    }
+
+    .staff-logout:hover {
+        background: #1E4F7A;
+        color: #FFFFFF;
+    }
+
+
+    /* ==========================================
+       RESPONSIVE
+       ========================================== */
+
+    @media (max-width: 700px) {
+
+        .staff-page {
+            padding: 20px 12px;
+        }
+
+        .staff-header {
+            padding: 25px;
+        }
+
+        .staff-header h1 {
+            font-size: 26px;
+        }
+
+        .staff-card {
+            padding: 20px;
+        }
+
+        .staff-form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .staff-form-group.full-width {
+            grid-column: auto;
+        }
+
+        .staff-button {
+            min-width: 140px;
+        }
+    }
+    /* ==========================================
+   STAFF DASHBOARD - BUTTON SIZE FIX
+========================================== */
+
+.staff-button,
+.staff-page button {
+    width: auto !important;
+    min-width: 150px !important;
+    max-width: 220px !important;
+    padding: 11px 24px !important;
+    margin-top: 8px;
+    border-radius: 7px !important;
+    font-size: 14px !important;
+    font-weight: 600;
+    box-sizing: border-box;
+}
+
+/* Keep button text comfortably away from borders */
+.staff-button:hover,
+.staff-page button:hover {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+/* ==========================================
+   STAFF DASHBOARD BUTTONS
+========================================== */
+
+.staff-button {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 150px !important;
+    max-width: 220px !important;
+
+    padding: 11px 24px !important;
+
+    background: #1E4F7A !important;
+    color: #FFFFFF !important;
+
+    border: none !important;
+    border-radius: 7px !important;
+
+    font-size: 14px !important;
+    font-weight: 600 !important;
+
+    line-height: 1.4 !important;
+    text-align: center !important;
+
+    cursor: pointer;
+    box-sizing: border-box;
+
+    margin-top: 8px;
+}
+
+.staff-button:hover {
+    background: #163E61 !important;
+    color: #FFFFFF !important;
+}
+
+
+/* ==========================================
+   STAFF LOGOUT BUTTON
+========================================== */
+
+.staff-logout {
+    width: auto !important;
+    min-width: 100px !important;
+
+    padding: 9px 20px !important;
+
+    background: #FFFFFF !important;
+    color: #1E4F7A !important;
+
+    border: 1px solid #1E4F7A !important;
+    border-radius: 7px !important;
+
+    font-size: 14px !important;
+    font-weight: 600 !important;
+
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.staff-logout:hover {
+    background: #1E4F7A !important;
+    color: #FFFFFF !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="staff-page">
+
+    <div class="staff-container">
+
+        <!-- HEADER -->
+
+        <div class="staff-header">
+
+            <h1>Staff Dashboard</h1>
+
+            <p>
+                Manage assigned grievances, update their status,
+                and communicate with students.
+            </p>
+
+        </div>
+
+
+        <!-- ASSIGNED GRIEVANCES -->
+
+        <div class="staff-card">
+
+            <div class="staff-card-header">
+
+                <div class="staff-icon">G</div>
+
+                <div>
+                    <h2>Assigned Grievances</h2>
+                </div>
+
+            </div>
+
+            <p>
+                View grievances that have been assigned to you.
+            </p>
+
+            <button
+                type="button"
+                id="loadAssignedGrievances"
+                class="staff-button">
+
+                View Assigned Grievances
+
+            </button>
+
+            <div
+                id="assignedGrievancesList"
+                class="staff-list">
+            </div>
+
+        </div>
+
+
+        <!-- UPDATE STATUS -->
+
+        <div class="staff-card">
+
+            <div class="staff-card-header">
+
+                <div class="staff-icon">S</div>
+
+                <div>
+                    <h2>Update Grievance Status</h2>
+                </div>
+
+            </div>
+
+            <form id="statusForm">
+
+                <div class="staff-form-grid">
+
+                    <div class="staff-form-group">
+
+                        <label for="statusGrievanceId">
+                            Grievance ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="statusGrievanceId"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="staff-form-group">
+
+                        <label for="newStatus">
+                            Status
+                        </label>
+
+                        <select
+                            id="newStatus"
+                            required>
+
+                            <option value="">
+                                Select Status
+                            </option>
+
+                            <option value="IN_PROGRESS">
+                                In Progress
+                            </option>
+
+                            <option value="RESOLVED">
+                                Resolved
+                            </option>
+
+                            <option value="REJECTED">
+                                Rejected
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <button
+                    type="submit"
+                    class="staff-button">
+
+                    Update Status
+
+                </button>
+
+            </form>
+
+            <p id="statusMessage"></p>
+
+        </div>
+
+
+        <!-- ADD UPDATE -->
+
+        <div class="staff-card">
+
+            <div class="staff-card-header">
+
+                <div class="staff-icon">U</div>
+
+                <div>
+                    <h2>Add Grievance Update</h2>
+                </div>
+
+            </div>
+
+            <p>
+                Send an update or response regarding a grievance.
+            </p>
+
+            <form id="updateForm">
+
+                <div class="staff-form-grid">
+
+                    <div class="staff-form-group">
+
+                        <label for="updateGrievanceId">
+                            Grievance ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="updateGrievanceId"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="staff-form-group full-width">
+
+                        <label for="updateText">
+                            Update
+                        </label>
+
+                        <textarea
+                            id="updateText"
+                            rows="5"
+                            required
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <button
+                    type="submit"
+                    class="staff-button">
+
+                    Add Update
+
+                </button>
+
+            </form>
+
+            <p id="updateMessage"></p>
+
+        </div>
+
+
+        <!-- HISTORY -->
+
+        <div class="staff-card">
+
+            <div class="staff-card-header">
+
+                <div class="staff-icon">H</div>
+
+                <div>
+                    <h2>My Update History</h2>
+                </div>
+
+            </div>
+
+            <p>
+                View your previous grievance updates and actions.
+            </p>
+
+            <button
+                type="button"
+                id="loadStaffHistory"
+                class="staff-button">
+
+                View My History
+
+            </button>
+
+            <div
+                id="staffHistoryList"
+                class="staff-list">
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <div class="staff-footer">
+
+            <button
+                type="button"
+                class="staff-logout"
+                onclick="logout()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- EXISTING JAVASCRIPT -->
+
+<script src="js/auth.js"></script>
+<script src="js/grievance.js"></script>
+<script src="js/guard.js"></script>
+
+<script>
+
+    if (!checkDashboardAccess("staff")) {
+        throw new Error("Unauthorized access.");
+    }
+
+</script>
+
+
+<script>
+
+function logout() {
+
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("idToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userEmail");
+
+    window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

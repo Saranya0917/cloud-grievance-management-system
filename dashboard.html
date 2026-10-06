@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard - Grievance Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+
+        <!-- ================================
+             DASHBOARD HEADER
+        ================================= -->
+
+        <div class="dashboard-header">
+
+            <div>
+                <span class="dashboard-label">STUDENT PORTAL</span>
+
+                <h1>Student Dashboard</h1>
+
+                <p>
+                    Submit, track and manage your grievances.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="logout-button"
+                onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+
+        <!-- ================================
+             QUICK INFO CARDS
+        ================================= -->
+
+        <div class="dashboard-cards">
+
+            <div class="dashboard-card">
+                <div class="dashboard-card-icon">G</div>
+
+                <div>
+                    <span>My Grievances</span>
+                    <strong>—</strong>
+                </div>
+            </div>
+
+
+            <div class="dashboard-card">
+                <div class="dashboard-card-icon">P</div>
+
+                <div>
+                    <span>In Progress</span>
+                    <strong>—</strong>
+                </div>
+            </div>
+
+
+            <div class="dashboard-card">
+                <div class="dashboard-card-icon">R</div>
+
+                <div>
+                    <span>Resolved</span>
+                    <strong>—</strong>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- ================================
+             SUBMIT GRIEVANCE
+        ================================= -->
+
+        <div class="dashboard-section">
+
+            <div class="section-header">
+
+                <div>
+                    <span class="section-label">NEW REQUEST</span>
+
+                    <h2>Submit a Grievance</h2>
+
+                    <p>
+                        Provide the details of your grievance below.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form id="grievanceForm">
+
+                <div class="form-grid">
+
+                    <!-- Category -->
+                    <div class="form-group">
+
+                        <label for="categoryId">
+                            Category
+                        </label>
+
+                        <select id="categoryId" required>
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            <option value="CAT001">
+                                Academic
+                            </option>
+
+                            <option value="CAT002">
+                                Hostel
+                            </option>
+
+                            <option value="CAT003">
+                                Transport
+                            </option>
+
+                            <option value="CAT004">
+                                Faculty
+                            </option>
+
+                            <option value="CAT005">
+                                Food Services
+                            </option>
+
+                            <option value="CAT006">
+                                IT Support
+                            </option>
+
+                            <option value="CAT007">
+                                General
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Priority -->
+                    <div class="form-group">
+
+                        <label for="priority">
+                            Priority
+                        </label>
+
+                        <select id="priority" required>
+
+                            <option value="LOW">
+                                Low
+                            </option>
+
+                            <option value="MEDIUM" selected>
+                                Medium
+                            </option>
+
+                            <option value="HIGH">
+                                High
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Subject -->
+                <div class="form-group">
+
+                    <label for="subject">
+                        Subject
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subject"
+                        placeholder="Enter a short title for your grievance"
+                        required>
+
+                </div>
+
+
+                <!-- Description -->
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        rows="6"
+                        placeholder="Describe your grievance in detail..."
+                        required></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-dashboard-button">
+
+                    Submit Grievance
+
+                </button>
+
+            </form>
+
+            <p id="message"></p>
+
+        </div>
+
+
+        <!-- ================================
+             MY GRIEVANCES
+        ================================= -->
+
+        <div class="dashboard-section">
+
+            <div class="section-header grievance-header">
+
+                <div>
+                    <span class="section-label">
+                        TRACK REQUESTS
+                    </span>
+
+                    <h2>My Grievances</h2>
+
+                    <p>
+                        View the current status of your submitted grievances.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="loadGrievances"
+                    class="outline-dashboard-button">
+
+                    View My Grievances
+
+                </button>
+
+            </div>
+
+
+            <div id="grievancesList" class="grievances-list"></div>
+
+        </div>
+
+
+        <!-- ================================
+             FOOTER
+        ================================= -->
+
+        <div class="dashboard-footer">
+
+            <span>
+                Cloud-Based Grievance Management System
+            </span>
+
+            <span>
+                Student Portal
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="js/auth.js"></script>
+    <script src="js/grievance.js"></script>
+    <script src="js/guard.js"></script>
+
+<script>
+    if (!checkDashboardAccess("student")) {
+        throw new Error("Unauthorized access.");
+    }
+</script>
+
+<script>
+
+function logout() {
+
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("idToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userEmail");
+
+    window.location.href = "index.html";
+}
+
+</script>
+
+</body>
+
+</html>
