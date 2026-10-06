@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Starting deployment..."
+      - echo "Checking AWS CLI..."
+      - aws --version
+
+  post_build:
+    commands:
+      - echo "Uploading frontend files to S3..."
+      - aws s3 sync . s3://$S3_BUCKET --delete --exclude ".git/*" --exclude "buildspec.yml"
+
+      - echo "Creating CloudFront invalidation..."
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
+
+      - echo "Deployment completed successfully."
