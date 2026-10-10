@@ -1,686 +1,1201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Staff Dashboard - Grievance Management System</title>
+
     <link rel="stylesheet" href="css/style.css">
 
     <style>
-    /* ==========================================
-       STAFF DASHBOARD
-       FINAL BLUE THEME
-       ========================================== */
-
-    .staff-page {
-        min-height: 100vh;
-        background: #F4F8FB;
-        padding: 40px 20px;
-        color: #243B53;
-    }
-
-    .staff-container {
-        max-width: 1100px;
-        margin: auto;
-    }
-
-
-    /* ==========================================
-       HEADER
-       ========================================== */
-
-    .staff-header {
-        background: #1E4F7A;
-        color: #FFFFFF;
-        padding: 35px;
-        border-radius: 18px;
-        margin-bottom: 28px;
-        box-shadow: 0 10px 25px rgba(30, 79, 122, 0.18);
-    }
-
-    .staff-header h1 {
-        margin: 0 0 8px;
-        font-size: 32px;
-        color: #FFFFFF;
-    }
-
-    .staff-header p {
-        margin: 0;
-        color: #EAF4FB;
-        font-size: 16px;
-    }
-
-
-    /* ==========================================
-       STAFF CARDS
-       ========================================== */
-
-    .staff-card {
-        background: #FFFFFF;
-        border: 1px solid #DCEAF5;
-        border-radius: 16px;
-        padding: 28px;
-        margin-bottom: 24px;
-        box-shadow: 0 6px 18px rgba(30, 79, 122, 0.08);
-    }
-
-
-    /* ==========================================
-       CARD HEADER
-       ========================================== */
-
-    .staff-card-header {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-
-    .staff-icon {
-        width: 48px;
-        height: 48px;
-
-        background: #DCEAF5;
-        color: #1E4F7A;
-
-        border-radius: 12px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 23px;
-    }
-
-    .staff-card h2 {
-        margin: 0;
-        color: #1E4F7A;
-        font-size: 22px;
-    }
-
-    .staff-card p {
-        color: #61788F;
-    }
-
-
-    /* ==========================================
-       STAFF BUTTONS
-       ========================================== */
-
-    .staff-button {
-        display: inline-block;
-
-        width: auto !important;
-        min-width: 150px;
-
-        background: #1E4F7A;
-        color: #FFFFFF;
-
-        border: none;
-
-        padding: 10px 20px;
-
-        border-radius: 7px;
-
-        cursor: pointer;
-
-        font-size: 14px;
-        font-weight: 600;
-
-        transition: 0.2s ease;
-    }
-
-    .staff-button:hover {
-        background: #163E61;
-        color: #FFFFFF;
-
-        transform: translateY(-1px);
-    }
-
-
-    /* ==========================================
-       FORMS
-       ========================================== */
-
-    .staff-form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-
-    .staff-form-group {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .staff-form-group.full-width {
-        grid-column: 1 / -1;
-    }
-
-    .staff-form-group label {
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #243B53;
-    }
-
-    .staff-form-group input,
-    .staff-form-group select,
-    .staff-form-group textarea {
-        width: 100%;
-
-        padding: 12px 14px;
-
-        border: 1px solid #BFD5E6;
-
-        border-radius: 9px;
-
-        background: #FFFFFF;
-
-        color: #243B53;
-
-        font-size: 15px;
-
-        outline: none;
-
-        box-sizing: border-box;
-    }
-
-    .staff-form-group input::placeholder,
-    .staff-form-group textarea::placeholder {
-        color: #8AA0B5;
-    }
-
-    .staff-form-group input:focus,
-    .staff-form-group select:focus,
-    .staff-form-group textarea:focus {
-        border-color: #1E4F7A;
-
-        box-shadow:
-            0 0 0 3px rgba(30, 79, 122, 0.12);
-    }
-
-    .staff-form-group textarea {
-        resize: vertical;
-    }
-
-
-    /* ==========================================
-       LISTS
-       ========================================== */
-
-    .staff-list {
-        margin-top: 20px;
-    }
-
-    #assignedGrievancesList,
-    #staffHistoryList {
-        margin-top: 18px;
-    }
-
-
-    /* ==========================================
-       MESSAGES
-       ========================================== */
-
-    #statusMessage,
-    #updateMessage {
-        margin-top: 15px;
-        font-weight: 600;
-        color: #1E4F7A;
-    }
-
-
-    /* ==========================================
-       LOGOUT
-       ========================================== */
-
-    .staff-footer {
-        text-align: center;
-        margin-top: 30px;
-    }
-
-    .staff-logout {
-        width: auto !important;
-        min-width: 100px;
-
-        background: #FFFFFF;
-
-        color: #1E4F7A;
-
-        border: 1px solid #1E4F7A;
-
-        padding: 9px 20px;
-
-        border-radius: 7px;
-
-        cursor: pointer;
-
-        font-size: 14px;
-        font-weight: 600;
-
-        transition: 0.2s ease;
-    }
-
-    .staff-logout:hover {
-        background: #1E4F7A;
-        color: #FFFFFF;
-    }
-
-
-    /* ==========================================
-       RESPONSIVE
-       ========================================== */
-
-    @media (max-width: 700px) {
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #F4F8FB;
+            color: #243B53;
+            font-family: Arial, sans-serif;
+        }
+
+        /* MAIN LAYOUT */
 
         .staff-page {
-            padding: 20px 12px;
+            min-height: 100vh;
+            padding: 24px;
+            background: #F4F8FB;
         }
 
-        .staff-header {
+        .staff-shell {
+            max-width: 1440px;
+            min-height: calc(100vh - 48px);
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 250px minmax(0, 1fr);
+
+            background: #FFFFFF;
+            border: 1px solid #DCEAF5;
+            border-radius: 18px;
+            overflow: hidden;
+
+            box-shadow: 0 10px 30px rgba(30, 79, 122, 0.09);
+        }
+
+        /* SIDEBAR */
+
+        .staff-sidebar {
+            background: #FFFFFF;
+            border-right: 1px solid #DCEAF5;
+            padding: 28px 16px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            padding: 0 12px 26px;
+            border-bottom: 1px solid #E6EFF6;
+            margin-bottom: 24px;
+        }
+
+        .brand-mark {
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+            background: #1E4F7A;
+            color: #FFFFFF;
+
+            font-weight: bold;
+            font-size: 20px;
+
+            margin-bottom: 12px;
+        }
+
+        .sidebar-brand h2 {
+            color: #1E4F7A;
+            font-size: 18px;
+            margin: 0 0 5px;
+        }
+
+        .sidebar-brand p {
+            color: #61788F;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .sidebar-label {
+            padding: 0 12px;
+            margin-bottom: 10px;
+
+            color: #8AA0B5;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1.2px;
+        }
+
+        .staff-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .staff-nav-button {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #435B70;
+
+            padding: 12px 13px;
+            border-radius: 9px;
+
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .staff-nav-button:hover {
+            background: #EEF5FA;
+            color: #1E4F7A;
+        }
+
+        .staff-nav-button.active {
+            background: #1E4F7A;
+            color: #FFFFFF;
+        }
+
+        .nav-symbol {
+            width: 27px;
+            height: 27px;
+            flex: 0 0 27px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 7px;
+            background: #E7F0F7;
+            color: #1E4F7A;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .staff-nav-button.active .nav-symbol {
+            background: rgba(255, 255, 255, 0.18);
+            color: #FFFFFF;
+        }
+
+        /* LOGOUT */
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding-top: 24px;
+        }
+
+        .staff-logout {
+            width: 100%;
+
+            border: 1px solid #BFD5E6;
+            background: #FFFFFF;
+            color: #1E4F7A;
+
+            padding: 11px 14px;
+            border-radius: 8px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .staff-logout:hover {
+            background: #1E4F7A;
+            border-color: #1E4F7A;
+            color: #FFFFFF;
+        }
+
+        /* MAIN CONTENT */
+
+        .staff-main {
+            min-width: 0;
+            padding: 32px;
+            background: #F8FBFD;
+        }
+
+        .main-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+
+            margin-bottom: 30px;
+        }
+
+        .topbar-label {
+            color: #61788F;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1.3px;
+
+            margin: 0 0 7px;
+        }
+
+        .topbar-title {
+            margin: 0;
+            color: #1E4F7A;
+            font-size: 27px;
+        }
+
+        .staff-role-badge {
+            background: #E7F0F7;
+            color: #1E4F7A;
+
+            padding: 9px 13px;
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* SECTION NAVIGATION */
+
+        .staff-view {
+            display: none;
+        }
+
+        .staff-view.active {
+            display: block;
+        }
+
+        /* WELCOME BANNER */
+
+        .welcome-banner {
+            background: linear-gradient(120deg, #1E4F7A, #2E6998);
+            color: #FFFFFF;
+
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 24px;
+
+            box-shadow: 0 8px 22px rgba(30, 79, 122, 0.15);
+        }
+
+        .welcome-banner .eyebrow {
+            margin: 0 0 10px;
+
+            color: #DCEAF5;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        .welcome-banner h2 {
+            color: #FFFFFF;
+            font-size: 27px;
+            line-height: 1.3;
+
+            margin: 0 0 10px;
+        }
+
+        .welcome-banner p {
+            max-width: 680px;
+
+            margin: 0;
+            color: #F0F6FB;
+
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* SUMMARY CARDS */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+
+            margin-bottom: 26px;
+        }
+
+        .summary-card {
+            padding: 22px;
+
+            background: #FFFFFF;
+            border: 1px solid #DCEAF5;
+            border-radius: 13px;
+
+            box-shadow: 0 4px 14px rgba(30, 79, 122, 0.05);
+        }
+
+        .summary-label {
+            margin: 0 0 13px;
+            color: #61788F;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .summary-value {
+            margin: 0;
+            color: #1E4F7A;
+
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .summary-note {
+            margin: 8px 0 0;
+            color: #8AA0B5;
+            font-size: 11px;
+        }
+
+        /* QUICK ACTIONS */
+
+        .quick-heading {
+            color: #243B53;
+            font-size: 17px;
+
+            margin: 0 0 14px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            padding: 18px;
+
+            border: 1px solid #DCEAF5;
+            border-radius: 12px;
+
+            background: #FFFFFF;
+            text-align: left;
+
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .quick-action:hover {
+            transform: translateY(-2px);
+            border-color: #9DBDD5;
+
+            box-shadow: 0 6px 16px rgba(30, 79, 122, 0.08);
+        }
+
+        .quick-action-icon {
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+            background: #E7F0F7;
+            color: #1E4F7A;
+
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .quick-action strong {
+            display: block;
+            margin-bottom: 5px;
+
+            color: #1E4F7A;
+            font-size: 13px;
+        }
+
+        .quick-action small {
+            color: #61788F;
+            line-height: 1.5;
+            font-size: 11px;
+        }
+
+        /* FEATURE PANELS */
+
+        .staff-panel {
             padding: 25px;
+
+            background: #FFFFFF;
+            border: 1px solid #DCEAF5;
+            border-radius: 14px;
+
+            box-shadow: 0 5px 18px rgba(30, 79, 122, 0.05);
         }
 
-        .staff-header h1 {
-            font-size: 26px;
+        .panel-heading {
+            margin: 0 0 8px;
+            color: #1E4F7A;
+            font-size: 21px;
         }
 
-        .staff-card {
-            padding: 20px;
+        .panel-description {
+            color: #61788F;
+
+            margin: 0 0 22px;
+            font-size: 13px;
+            line-height: 1.6;
         }
+
+        /* BUTTONS */
+
+        .staff-button {
+            display: inline-block;
+
+            width: auto !important;
+            min-width: 140px;
+            max-width: 100%;
+
+            padding: 11px 20px;
+
+            background: #1E4F7A;
+            color: #FFFFFF;
+
+            border: none;
+            border-radius: 7px;
+
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: center;
+
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .staff-button:hover {
+            background: #163E61;
+            color: #FFFFFF;
+        }
+
+        /* FORMS */
 
         .staff-form-grid {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .staff-form-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
         }
 
         .staff-form-group.full-width {
-            grid-column: auto;
+            grid-column: 1 / -1;
         }
 
-        .staff-button {
-            min-width: 140px;
+        .staff-form-group label {
+            margin-bottom: 8px;
+
+            font-size: 13px;
+            font-weight: 600;
+            color: #243B53;
         }
-    }
-    /* ==========================================
-   STAFF DASHBOARD - BUTTON SIZE FIX
-========================================== */
 
-.staff-button,
-.staff-page button {
-    width: auto !important;
-    min-width: 150px !important;
-    max-width: 220px !important;
-    padding: 11px 24px !important;
-    margin-top: 8px;
-    border-radius: 7px !important;
-    font-size: 14px !important;
-    font-weight: 600;
-    box-sizing: border-box;
-}
+        .staff-form-group input,
+        .staff-form-group select,
+        .staff-form-group textarea {
+            width: 100%;
 
-/* Keep button text comfortably away from borders */
-.staff-button:hover,
-.staff-page button:hover {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-}
-/* ==========================================
-   STAFF DASHBOARD BUTTONS
-========================================== */
+            padding: 12px 14px;
 
-.staff-button {
-    display: inline-block !important;
-    width: auto !important;
-    min-width: 150px !important;
-    max-width: 220px !important;
+            border: 1px solid #BFD5E6;
+            border-radius: 8px;
 
-    padding: 11px 24px !important;
+            background: #FFFFFF;
+            color: #243B53;
 
-    background: #1E4F7A !important;
-    color: #FFFFFF !important;
+            font: inherit;
+            font-size: 14px;
 
-    border: none !important;
-    border-radius: 7px !important;
+            outline: none;
+        }
 
-    font-size: 14px !important;
-    font-weight: 600 !important;
+        .staff-form-group input:focus,
+        .staff-form-group select:focus,
+        .staff-form-group textarea:focus {
+            border-color: #1E4F7A;
+            box-shadow: 0 0 0 3px rgba(30, 79, 122, 0.12);
+        }
 
-    line-height: 1.4 !important;
-    text-align: center !important;
+        .staff-form-group textarea {
+            resize: vertical;
+        }
 
-    cursor: pointer;
-    box-sizing: border-box;
+        /* EXISTING GRIEVANCE LISTS */
 
-    margin-top: 8px;
-}
+        .staff-list {
+            margin-top: 20px;
+        }
 
-.staff-button:hover {
-    background: #163E61 !important;
-    color: #FFFFFF !important;
-}
+        #assignedGrievancesList,
+        #staffHistoryList {
+            margin-top: 18px;
+        }
 
+        #statusMessage,
+        #updateMessage {
+            margin-top: 15px;
+            font-weight: 600;
+            color: #1E4F7A;
+        }
 
-/* ==========================================
-   STAFF LOGOUT BUTTON
-========================================== */
+        /* RESPONSIVE */
 
-.staff-logout {
-    width: auto !important;
-    min-width: 100px !important;
+        @media (max-width: 1000px) {
+            .staff-shell {
+                grid-template-columns: 220px minmax(0, 1fr);
+            }
 
-    padding: 9px 20px !important;
+            .staff-main {
+                padding: 24px;
+            }
 
-    background: #FFFFFF !important;
-    color: #1E4F7A !important;
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
 
-    border: 1px solid #1E4F7A !important;
-    border-radius: 7px !important;
+        @media (max-width: 700px) {
+            .staff-page {
+                padding: 10px;
+            }
 
-    font-size: 14px !important;
-    font-weight: 600 !important;
+            .staff-shell {
+                grid-template-columns: 1fr;
+            }
 
-    cursor: pointer;
-    box-sizing: border-box;
-}
+            .staff-sidebar {
+                border-right: none;
+                border-bottom: 1px solid #DCEAF5;
+                padding: 18px;
+            }
 
-.staff-logout:hover {
-    background: #1E4F7A !important;
-    color: #FFFFFF !important;
-}
-</style>
+            .sidebar-brand {
+                padding-bottom: 16px;
+                margin-bottom: 16px;
+            }
+
+            .staff-nav {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .staff-nav-button {
+                padding: 10px 8px;
+                font-size: 11px;
+                gap: 7px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 15px;
+                padding-top: 0;
+            }
+
+            .staff-main {
+                padding: 20px 14px;
+            }
+
+            .topbar-title {
+                font-size: 22px;
+            }
+
+            .welcome-banner {
+                padding: 23px;
+            }
+
+            .welcome-banner h2 {
+                font-size: 23px;
+            }
+
+            .quick-grid,
+            .staff-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .staff-form-group.full-width {
+                grid-column: auto;
+            }
+
+            .staff-panel {
+                padding: 19px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="staff-page">
 
-    <div class="staff-container">
+    <div class="staff-shell">
 
-        <!-- HEADER -->
+        <!-- LEFT SIDEBAR -->
 
-        <div class="staff-header">
+        <aside class="staff-sidebar">
 
-            <h1>Staff Dashboard</h1>
+            <div class="sidebar-brand">
 
-            <p>
-                Manage assigned grievances, update their status,
-                and communicate with students.
-            </p>
+                <div class="brand-mark">G</div>
 
-        </div>
+                <h2>Grievance Portal</h2>
 
-
-        <!-- ASSIGNED GRIEVANCES -->
-
-        <div class="staff-card">
-
-            <div class="staff-card-header">
-
-                <div class="staff-icon">G</div>
-
-                <div>
-                    <h2>Assigned Grievances</h2>
-                </div>
+                <p>Staff workspace</p>
 
             </div>
 
-            <p>
-                View grievances that have been assigned to you.
-            </p>
+            <p class="sidebar-label">WORKSPACE</p>
 
-            <button
-                type="button"
-                id="loadAssignedGrievances"
-                class="staff-button">
+            <nav class="staff-nav" aria-label="Staff dashboard navigation">
 
-                View Assigned Grievances
+                <button type="button"
+                        class="staff-nav-button active"
+                        data-view="welcomeView">
 
-            </button>
-
-            <div
-                id="assignedGrievancesList"
-                class="staff-list">
-            </div>
-
-        </div>
-
-
-        <!-- UPDATE STATUS -->
-
-        <div class="staff-card">
-
-            <div class="staff-card-header">
-
-                <div class="staff-icon">S</div>
-
-                <div>
-                    <h2>Update Grievance Status</h2>
-                </div>
-
-            </div>
-
-            <form id="statusForm">
-
-                <div class="staff-form-grid">
-
-                    <div class="staff-form-group">
-
-                        <label for="statusGrievanceId">
-                            Grievance ID
-                        </label>
-
-                        <input
-                            type="text"
-                            id="statusGrievanceId"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="staff-form-group">
-
-                        <label for="newStatus">
-                            Status
-                        </label>
-
-                        <select
-                            id="newStatus"
-                            required>
-
-                            <option value="">
-                                Select Status
-                            </option>
-
-                            <option value="IN_PROGRESS">
-                                In Progress
-                            </option>
-
-                            <option value="RESOLVED">
-                                Resolved
-                            </option>
-
-                            <option value="REJECTED">
-                                Rejected
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-                <br>
-
-                <button
-                    type="submit"
-                    class="staff-button">
-
-                    Update Status
+                    <span class="nav-symbol">H</span>
+                    <span>Dashboard</span>
 
                 </button>
 
-            </form>
+                <button type="button"
+                        class="staff-nav-button"
+                        data-view="assignedView">
 
-            <p id="statusMessage"></p>
-
-        </div>
-
-
-        <!-- ADD UPDATE -->
-
-        <div class="staff-card">
-
-            <div class="staff-card-header">
-
-                <div class="staff-icon">U</div>
-
-                <div>
-                    <h2>Add Grievance Update</h2>
-                </div>
-
-            </div>
-
-            <p>
-                Send an update or response regarding a grievance.
-            </p>
-
-            <form id="updateForm">
-
-                <div class="staff-form-grid">
-
-                    <div class="staff-form-group">
-
-                        <label for="updateGrievanceId">
-                            Grievance ID
-                        </label>
-
-                        <input
-                            type="text"
-                            id="updateGrievanceId"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="staff-form-group full-width">
-
-                        <label for="updateText">
-                            Update
-                        </label>
-
-                        <textarea
-                            id="updateText"
-                            rows="5"
-                            required
-                        ></textarea>
-
-                    </div>
-
-                </div>
-
-                <br>
-
-                <button
-                    type="submit"
-                    class="staff-button">
-
-                    Add Update
+                    <span class="nav-symbol">G</span>
+                    <span>Assigned Grievances</span>
 
                 </button>
 
-            </form>
+                <button type="button"
+                        class="staff-nav-button"
+                        data-view="statusView">
 
-            <p id="updateMessage"></p>
+                    <span class="nav-symbol">S</span>
+                    <span>Update Status</span>
 
-        </div>
+                </button>
+
+                <button type="button"
+                        class="staff-nav-button"
+                        data-view="updateView">
+
+                    <span class="nav-symbol">U</span>
+                    <span>Add Update</span>
+
+                </button>
+
+                <button type="button"
+                        class="staff-nav-button"
+                        data-view="historyView">
+
+                    <span class="nav-symbol">H</span>
+                    <span>My Update History</span>
+
+                </button>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <button type="button"
+                        class="staff-logout"
+                        onclick="logout()">
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
 
 
-        <!-- HISTORY -->
+        <!-- MAIN CONTENT -->
 
-        <div class="staff-card">
+        <main class="staff-main">
 
-            <div class="staff-card-header">
-
-                <div class="staff-icon">H</div>
+            <header class="main-topbar">
 
                 <div>
-                    <h2>My Update History</h2>
+
+                    <p class="topbar-label">
+                        CLOUD-BASED GRIEVANCE MANAGEMENT SYSTEM
+                    </p>
+
+                    <h1 class="topbar-title" id="currentViewTitle">
+                        Staff Dashboard
+                    </h1>
+
                 </div>
 
-            </div>
+                <span class="staff-role-badge">
+                    STAFF PORTAL
+                </span>
 
-            <p>
-                View your previous grievance updates and actions.
-            </p>
-
-            <button
-                type="button"
-                id="loadStaffHistory"
-                class="staff-button">
-
-                View My History
-
-            </button>
-
-            <div
-                id="staffHistoryList"
-                class="staff-list">
-            </div>
-
-        </div>
+            </header>
 
 
-        <!-- LOGOUT -->
+            <!-- WELCOME SCREEN -->
 
-        <div class="staff-footer">
+            <section class="staff-view active" id="welcomeView">
 
-            <button
-                type="button"
-                class="staff-logout"
-                onclick="logout()">
+                <div class="welcome-banner">
 
-                Logout
+                    <p class="eyebrow">
+                        WELCOME TO YOUR WORKSPACE
+                    </p>
 
-            </button>
+                    <h2>Welcome to the Staff Portal!</h2>
 
-        </div>
+                    <p>
+                        Manage assigned grievances, track progress,
+                        update statuses, and keep students informed
+                        from one place.
+                    </p>
+
+                </div>
+
+
+                <!-- SUMMARY CARDS -->
+
+                <div class="summary-grid">
+
+                    <article class="summary-card">
+
+                        <p class="summary-label">
+                            Total Assigned
+                        </p>
+
+                        <p class="summary-value" id="totalAssignedCount">—</p>
+
+                        <p class="summary-note">
+                            Grievances assigned to your account
+                        </p>
+
+                    </article>
+
+
+                    <article class="summary-card">
+
+                        <p class="summary-label">
+                            In Progress
+                        </p>
+
+                        <p class="summary-value" id="inProgressCount">—</p>
+
+                        <p class="summary-note">
+                            Currently being handled
+                        </p>
+
+                    </article>
+
+
+                    <article class="summary-card">
+
+                        <p class="summary-label">
+                            Resolved
+                        </p>
+
+                        <p class="summary-value" id="resolvedCount">—</p>
+
+                        <p class="summary-note">
+                            Successfully resolved grievances
+                        </p>
+
+                    </article>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <h3 class="quick-heading">Quick Actions</h3>
+
+                <div class="quick-grid">
+
+                    <button type="button"
+                            class="quick-action"
+                            data-view="assignedView">
+
+                        <span class="quick-action-icon">G</span>
+
+                        <span>
+                            <strong>Assigned Grievances</strong>
+                            <small>View grievances assigned to you</small>
+                        </span>
+
+                    </button>
+
+
+                    <button type="button"
+                            class="quick-action"
+                            data-view="statusView">
+
+                        <span class="quick-action-icon">S</span>
+
+                        <span>
+                            <strong>Update Grievance Status</strong>
+                            <small>Change the status of a grievance</small>
+                        </span>
+
+                    </button>
+
+
+                    <button type="button"
+                            class="quick-action"
+                            data-view="updateView">
+
+                        <span class="quick-action-icon">U</span>
+
+                        <span>
+                            <strong>Add Grievance Update</strong>
+                            <small>Send a response or progress note</small>
+                        </span>
+
+                    </button>
+
+
+                    <button type="button"
+                            class="quick-action"
+                            data-view="historyView">
+
+                        <span class="quick-action-icon">H</span>
+
+                        <span>
+                            <strong>My Update History</strong>
+                            <small>Review your previous actions</small>
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ASSIGNED GRIEVANCES -->
+
+            <section class="staff-view" id="assignedView">
+
+                <div class="staff-panel">
+
+                    <h2 class="panel-heading">
+                        Assigned Grievances
+                    </h2>
+
+                    <p class="panel-description">
+                        View grievances that have been assigned to you.
+                    </p>
+
+                    <button type="button"
+                            id="loadAssignedGrievances"
+                            class="staff-button">
+
+                        View Assigned Grievances
+
+                    </button>
+
+                    <div id="assignedGrievancesList"
+                         class="staff-list">
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- UPDATE GRIEVANCE STATUS -->
+
+            <section class="staff-view" id="statusView">
+
+                <div class="staff-panel">
+
+                    <h2 class="panel-heading">
+                        Update Grievance Status
+                    </h2>
+
+                    <p class="panel-description">
+                        Select a grievance ID and choose its new status.
+                    </p>
+
+                    <form id="statusForm">
+
+                        <div class="staff-form-grid">
+
+                            <div class="staff-form-group">
+
+                                <label for="statusGrievanceId">
+                                    Grievance ID
+                                </label>
+
+                                <input type="text"
+                                       id="statusGrievanceId"
+                                       required>
+
+                            </div>
+
+
+                            <div class="staff-form-group">
+
+                                <label for="newStatus">
+                                    Status
+                                </label>
+
+                                <select id="newStatus" required>
+
+                                    <option value="">
+                                        Select Status
+                                    </option>
+
+                                    <option value="IN_PROGRESS">
+                                        In Progress
+                                    </option>
+
+                                    <option value="RESOLVED">
+                                        Resolved
+                                    </option>
+
+                                    <option value="REJECTED">
+                                        Rejected
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <br>
+
+                        <button type="submit" class="staff-button">
+                            Update Status
+                        </button>
+
+                    </form>
+
+                    <p id="statusMessage" role="status"></p>
+
+                </div>
+
+            </section>
+
+
+            <!-- ADD GRIEVANCE UPDATE -->
+
+            <section class="staff-view" id="updateView">
+
+                <div class="staff-panel">
+
+                    <h2 class="panel-heading">
+                        Add Grievance Update
+                    </h2>
+
+                    <p class="panel-description">
+                        Send an update or response regarding a grievance.
+                    </p>
+
+                    <form id="updateForm">
+
+                        <div class="staff-form-grid">
+
+                            <div class="staff-form-group">
+
+                                <label for="updateGrievanceId">
+                                    Grievance ID
+                                </label>
+
+                                <input type="text"
+                                       id="updateGrievanceId"
+                                       required>
+
+                            </div>
+
+
+                            <div class="staff-form-group full-width">
+
+                                <label for="updateText">
+                                    Update
+                                </label>
+
+                                <textarea id="updateText"
+                                          rows="5"
+                                          required></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <br>
+
+                        <button type="submit" class="staff-button">
+                            Add Update
+                        </button>
+
+                    </form>
+
+                    <p id="updateMessage" role="status"></p>
+
+                </div>
+
+            </section>
+
+
+            <!-- MY UPDATE HISTORY -->
+
+            <section class="staff-view" id="historyView">
+
+                <div class="staff-panel">
+
+                    <h2 class="panel-heading">
+                        My Update History
+                    </h2>
+
+                    <p class="panel-description">
+                        View your previous grievance updates and actions.
+                    </p>
+
+                    <button type="button"
+                            id="loadStaffHistory"
+                            class="staff-button">
+
+                        View My History
+
+                    </button>
+
+                    <div id="staffHistoryList"
+                         class="staff-list">
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
 </div>
 
 
-<!-- EXISTING JAVASCRIPT -->
+<!-- EXISTING PROJECT JAVASCRIPT -->
 
 <script src="js/auth.js"></script>
 <script src="js/grievance.js"></script>
 <script src="js/guard.js"></script>
 
+
 <script>
 
-    if (!checkDashboardAccess("staff")) {
+    /* ACCESS CONTROL */
+
+    if (
+        typeof checkDashboardAccess !== "function" ||
+        !checkDashboardAccess("staff")
+    ) {
         throw new Error("Unauthorized access.");
     }
 
-</script>
+
+    /* LOGOUT */
+
+    function logout() {
+
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("idToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userEmail");
+
+        window.location.href = "index.html";
+
+    }
 
 
-<script>
+    /* SIDEBAR NAVIGATION */
 
-function logout() {
+    const staffViewTitles = {
 
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("idToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userEmail");
+        welcomeView: "Staff Dashboard",
+        assignedView: "Assigned Grievances",
+        statusView: "Update Grievance Status",
+        updateView: "Add Grievance Update",
+        historyView: "My Update History"
 
-    window.location.href = "index.html";
+    };
 
-}
+
+    function showStaffView(viewId) {
+
+        const target = document.getElementById(viewId);
+
+        if (!target) {
+            return;
+        }
+
+        document.querySelectorAll(".staff-view").forEach(view => {
+
+            view.classList.toggle(
+                "active",
+                view.id === viewId
+            );
+
+        });
+
+
+        document.querySelectorAll(".staff-nav-button").forEach(button => {
+
+            const active = button.dataset.view === viewId;
+
+            button.classList.toggle("active", active);
+
+            if (active) {
+                button.setAttribute("aria-current", "page");
+            } else {
+                button.removeAttribute("aria-current");
+            }
+
+        });
+
+
+        document.getElementById("currentViewTitle").textContent =
+            staffViewTitles[viewId] || "Staff Dashboard";
+
+    }
+
+
+    /* SIDEBAR AND QUICK ACTION BUTTONS */
+
+    document.querySelectorAll("[data-view]").forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            showStaffView(this.dataset.view);
+
+        });
+
+    });
+
+
+    /* SUMMARY CARD CALCULATION */
+
+    function updateStaffSummary(grievances) {
+
+        const items = Array.isArray(grievances)
+            ? grievances
+            : [];
+
+        document.getElementById("totalAssignedCount").textContent =
+            items.length;
+
+        document.getElementById("inProgressCount").textContent =
+            items.filter(item =>
+                String(item.status || "").toUpperCase() === "IN_PROGRESS"
+            ).length;
+
+        document.getElementById("resolvedCount").textContent =
+            items.filter(item =>
+                String(item.status || "").toUpperCase() === "RESOLVED"
+            ).length;
+
+    }
+
+
+    /*
+      The existing grievance.js handles the API requests and button actions.
+      We do not replace those handlers here.
+    */
+
+
+    /* SHOW WELCOME SCREEN FIRST */
+
+    showStaffView("welcomeView");
 
 </script>
 
 </body>
-
 </html>
