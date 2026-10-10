@@ -184,6 +184,30 @@ if (loadAssignedButton) {
                     "Unable to load assigned grievances."
                 );
             }
+            // Update staff dashboard summary cards
+const assignedGrievances = data.grievances || [];
+
+const totalElement = document.getElementById("totalAssignedCount");
+const progressElement = document.getElementById("inProgressCount");
+const resolvedElement = document.getElementById("resolvedCount");
+
+if (totalElement) {
+    totalElement.textContent = assignedGrievances.length;
+}
+
+if (progressElement) {
+    progressElement.textContent = assignedGrievances.filter(
+        grievance =>
+            String(grievance.status || "").toUpperCase() === "IN_PROGRESS"
+    ).length;
+}
+
+if (resolvedElement) {
+    resolvedElement.textContent = assignedGrievances.filter(
+        grievance =>
+            String(grievance.status || "").toUpperCase() === "RESOLVED"
+    ).length;
+}
 
             if (data.grievances.length === 0) {
 
