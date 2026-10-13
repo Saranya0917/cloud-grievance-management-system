@@ -317,6 +317,68 @@
             outline: 3px solid #8CBCE0;
             outline-offset: 3px;
         }
+        /* ADMIN GRIEVANCE FILTERS */
+
+.admin-filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 22px;
+    padding: 20px;
+    background: #F4F8FB;
+    border: 1px solid #DCE6EF;
+    border-radius: 10px;
+}
+
+.admin-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-filter-group label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #243B53;
+}
+
+.admin-filter-group select,
+.admin-filter-group input {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid #BFD5E6;
+    border-radius: 7px;
+    background: #FFFFFF;
+    color: #243B53;
+    font-size: 14px;
+}
+
+.admin-filter-group select:focus,
+.admin-filter-group input:focus {
+    outline: 2px solid #8CBCE0;
+    outline-offset: 2px;
+}
+
+.admin-filter-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.admin-filter-count {
+    color: #61788F;
+    font-size: 13px;
+    margin: 15px 0 0;
+}
+
+@media (max-width: 700px) {
+    .admin-filters {
+        grid-template-columns: 1fr;
+    }
+}
 
         /* GRIEVANCE RESULTS */
 
@@ -607,15 +669,67 @@
                     </p>
 
                     <button type="button"
-                            id="loadAllGrievances"
-                            class="admin-button">
-                        View All Grievances
-                    </button>
+        id="loadAllGrievances"
+        class="admin-button">
+    View All Grievances
+</button>
 
-                    <div id="allGrievancesList"
-                         class="admin-list"
-                         aria-live="polite">
-                    </div>
+<!-- FILTER CONTROLS -->
+
+<div class="admin-filters">
+
+    <div class="admin-filter-group">
+        <label for="filterStatus">Filter by Status</label>
+
+        <select id="filterStatus">
+            <option value="ALL">All Statuses</option>
+            <option value="SUBMITTED">Submitted</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="RESOLVED">Resolved</option>
+            <option value="REJECTED">Rejected</option>
+        </select>
+    </div>
+
+    <div class="admin-filter-group">
+        <label for="filterAssignment">Filter by Assignment</label>
+
+        <select id="filterAssignment">
+            <option value="ALL">All Assignments</option>
+            <option value="ASSIGNED">Assigned</option>
+            <option value="NOT_ASSIGNED">Not Assigned</option>
+        </select>
+    </div>
+
+    <div class="admin-filter-group">
+        <label for="searchGrievanceId">Search by Grievance ID</label>
+
+        <input
+            type="text"
+            id="searchGrievanceId"
+            placeholder="Enter grievance ID">
+    </div>
+
+</div>
+
+<div class="admin-filter-actions">
+
+    <button type="button"
+            id="clearGrievanceFilters"
+            class="admin-button">
+        Clear Filters
+    </button>
+
+</div>
+
+<p id="grievanceFilterCount"
+   class="admin-filter-count"
+   aria-live="polite">
+</p>
+
+<div id="allGrievancesList"
+     class="admin-list"
+     aria-live="polite">
+</div> 
 
                 </div>
 
