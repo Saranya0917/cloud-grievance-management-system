@@ -520,6 +520,47 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* ==========================================
+   ADMIN DASHBOARD - COMPACT BUTTONS
+   ========================================== */
+
+.admin-button {
+    width: auto;
+    min-width: 150px;
+    max-width: 220px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Filter action buttons */
+.admin-filter-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.admin-filter-actions .admin-button {
+    width: auto;
+    min-width: 150px;
+    max-width: 200px;
+}
+
+/* Keep buttons properly sized on smaller screens */
+@media (max-width: 600px) {
+    .admin-button {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .admin-filter-actions {
+        flex-wrap: wrap;
+    }
+}
     </style>
 </head>
 
@@ -712,6 +753,12 @@
 </div>
 
 <div class="admin-filter-actions">
+
+    <button type="button"
+            id="applyGrievanceFilters"
+            class="admin-button">
+        Apply Filters
+    </button>
 
     <button type="button"
             id="clearGrievanceFilters"
