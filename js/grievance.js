@@ -519,6 +519,9 @@ const filterAssignment =
 const searchGrievanceId =
     document.getElementById("searchGrievanceId");
 
+const applyGrievanceFilters =
+    document.getElementById("applyGrievanceFilters");
+
 const clearGrievanceFilters =
     document.getElementById("clearGrievanceFilters");
 
@@ -526,11 +529,11 @@ const grievanceFilterCount =
     document.getElementById("grievanceFilterCount");
 
 let adminGrievancesCache = [];
-let grievancesLoaded = false;
+let adminGrievancesLoaded = false;
 
 
-// Normalize status values such as IN_PROGRESS and In Progress.
-function normalizeGrievanceStatus(status) {
+// Normalize status values.
+function normalizeAdminStatus(status) {
     return String(status || "")
         .trim()
         .toUpperCase()
@@ -538,41 +541,64 @@ function normalizeGrievanceStatus(status) {
 }
 
 
-// Safely display text returned by the API.
-function createAdminGrievanceCard(grievance) {
+// Render grievance cards.
+function renderAdminGrievanceCard(grievance) {
 
     const card = document.createElement("div");
 
     const heading = document.createElement("h3");
-    heading.textContent = grievance.subject || "Untitled Grievance";
+
+    heading.textContent =
+        grievance.subject || "Untitled Grievance";
+
     card.appendChild(heading);
 
     function addField(label, value) {
 
         const paragraph = document.createElement("p");
+
         const strong = document.createElement("strong");
 
         strong.textContent = label + ": ";
 
         paragraph.appendChild(strong);
+
         paragraph.appendChild(
-            document.createTextNode(String(value ?? "N/A"))
+            document.createTextNode(
+                value === undefined ||
+                value === null ||
+                value === ""
+                    ? "N/A"
+                    : String(value)
+            )
         );
 
         card.appendChild(paragraph);
     }
 
-    addField("Grievance ID", grievance.grievanceId);
-    addField("Student", grievance.userId);
-    addField("Category", grievance.categoryId);
-    addField("Priority", grievance.priority);
-    addField("Status", grievance.status);
-    addField("Description", grievance.description);
+    const grievanceId =
+        grievance.grievanceId ??
+        grievance.grievance_id;
+
+    const student =
+        grievance.userId ??
+        grievance.user_id;
+
+    const category =
+        grievance.categoryId ??
+        grievance.category_id;
 
     const assignedTo =
         grievance.assignedTo ??
         grievance.assigned_to ??
         "";
+
+    addField("Grievance ID", grievanceId);
+    addField("Student", student);
+    addField("Category", category);
+    addField("Priority", grievance.priority);
+    addField("Status", grievance.status);
+    addField("Description", grievance.description);
 
     addField(
         "Assigned To",
@@ -583,47 +609,59 @@ function createAdminGrievanceCard(grievance) {
 }
 
 
-// Apply the selected filters to the cached grievance records.
-function renderFilteredGrievances() {
+// Apply selected filters to the loaded grievance records.
+function applyAdminGrievanceFilters() {
 
-    if (!allGrievancesList) {
+    if (!adminGrievancesLoaded) {
+
+        allGrievancesList.textContent =
+            "Please click View All Grievances first.";
+
         return;
     }
 
     const selectedStatus =
-        filterStatus ? filterStatus.value : "ALL";
+        filterStatus
+            ? filterStatus.value
+            : "ALL";
 
     const selectedAssignment =
-        filterAssignment ? filterAssignment.value : "ALL";
+        filterAssignment
+            ? filterAssignment.value
+            : "ALL";
 
-    const searchId = searchGrievanceId
-        ? searchGrievanceId.value.trim().toLowerCase()
-        : "";
+    const searchText =
+        searchGrievanceId
+            ? searchGrievanceId.value.trim().toLowerCase()
+            : "";
 
-    const filteredGrievances = adminGrievancesCache.filter(
-        function (grievance) {
+    const filteredGrievances =
+        adminGrievancesCache.filter(function (grievance) {
 
-            // Filter by status.
-            const grievanceStatus =
-                normalizeGrievanceStatus(grievance.status);
+            // 1. Filter by status.
+            const actualStatus =
+                normalizeAdminStatus(grievance.status);
 
             const matchesStatus =
                 selectedStatus === "ALL" ||
-                grievanceStatus === selectedStatus;
+                actualStatus === selectedStatus;
 
-            // Filter by assignment.
+
+            // 2. Filter by assignment.
             const assignedTo =
                 grievance.assignedTo ??
                 grievance.assigned_to ??
                 "";
 
-            const assignmentValue = String(assignedTo).trim();
+            const assignmentText =
+                String(assignedTo).trim().toLowerCase();
 
             const isAssigned =
-                assignmentValue !== "" &&
-                assignmentValue.toLowerCase() !== "not assigned" &&
-                assignmentValue.toLowerCase() !== "none" &&
-                assignmentValue.toLowerCase() !== "null";
+                assignmentText !== "" &&
+                assignmentText !== "not assigned" &&
+                assignmentText !== "none" &&
+                assignmentText !== "null" &&
+                assignmentText !== "undefined";
 
             const matchesAssignment =
                 selectedAssignment === "ALL" ||
@@ -636,45 +674,60 @@ function renderFilteredGrievances() {
                     !isAssigned
                 );
 
-            // Search by grievance ID.
-            const grievanceId =
-                String(grievance.grievanceId || "").toLowerCase();
+
+            // 3. Search by grievance ID.
+            const actualId = String(
+                grievance.grievanceId ??
+                grievance.grievance_id ??
+                ""
+            ).toLowerCase();
 
             const matchesSearch =
-                grievanceId.includes(searchId);
+                actualId.includes(searchText);
 
+
+            // All selected conditions must match.
             return (
                 matchesStatus &&
                 matchesAssignment &&
                 matchesSearch
             );
-        }
-    );
+        });
 
-    allGrievancesList.innerHTML = "";
 
+    // Remove the previous results.
+    allGrievancesList.replaceChildren();
+
+
+    // Show how many records match.
     if (grievanceFilterCount) {
+
         grievanceFilterCount.textContent =
             "Showing " +
             filteredGrievances.length +
             " of " +
             adminGrievancesCache.length +
-            " grievances";
+            " grievances.";
     }
 
+
+    // Show a helpful message if nothing matches.
     if (filteredGrievances.length === 0) {
 
         allGrievancesList.textContent =
             adminGrievancesCache.length === 0
                 ? "No grievances found."
-                : "No grievances match the selected filters.";
+                : "No grievances match your selected filters.";
 
         return;
     }
 
+
+    // Display only matching grievances.
     filteredGrievances.forEach(function (grievance) {
 
-        const card = createAdminGrievanceCard(grievance);
+        const card =
+            renderAdminGrievanceCard(grievance);
 
         allGrievancesList.appendChild(card);
 
@@ -682,13 +735,15 @@ function renderFilteredGrievances() {
 }
 
 
-// Load all grievance records from the existing API.
+// Load all grievances from the existing API.
 if (loadAllButton) {
 
     loadAllButton.addEventListener("click", async function () {
 
         allGrievancesList.textContent =
             "Loading all grievances...";
+
+        adminGrievancesLoaded = false;
 
         if (grievanceFilterCount) {
             grievanceFilterCount.textContent = "";
@@ -711,6 +766,7 @@ if (loadAllButton) {
             const data = await response.json();
 
             if (!response.ok) {
+
                 throw new Error(
                     data.message ||
                     "Unable to load grievances."
@@ -722,24 +778,56 @@ if (loadAllButton) {
                     ? data.grievances
                     : [];
 
-            grievancesLoaded = true;
+            adminGrievancesLoaded = true;
 
-            renderFilteredGrievances();
+
+            // Initially show all loaded grievances.
+            allGrievancesList.replaceChildren();
+
+            if (adminGrievancesCache.length === 0) {
+
+                allGrievancesList.textContent =
+                    "No grievances found.";
+
+                if (grievanceFilterCount) {
+                    grievanceFilterCount.textContent =
+                        "Showing 0 of 0 grievances.";
+                }
+
+                return;
+            }
+
+            adminGrievancesCache.forEach(function (grievance) {
+
+                allGrievancesList.appendChild(
+                    renderAdminGrievanceCard(grievance)
+                );
+
+            });
+
+            if (grievanceFilterCount) {
+
+                grievanceFilterCount.textContent =
+                    "Showing " +
+                    adminGrievancesCache.length +
+                    " of " +
+                    adminGrievancesCache.length +
+                    " grievances.";
+            }
 
         } catch (error) {
 
-            console.error("Load grievances error:", error);
+            console.error(
+                "Load all grievances error:",
+                error
+            );
 
             adminGrievancesCache = [];
-            grievancesLoaded = false;
+            adminGrievancesLoaded = false;
 
             allGrievancesList.textContent =
                 error.message ||
                 "Unable to load grievances.";
-
-            if (grievanceFilterCount) {
-                grievanceFilterCount.textContent = "";
-            }
 
         } finally {
 
@@ -750,56 +838,70 @@ if (loadAllButton) {
 }
 
 
-// Reapply filters when the user changes a selection or search.
-if (filterStatus) {
-    filterStatus.addEventListener("change", function () {
+// Apply Filters button.
+if (applyGrievanceFilters) {
 
-        if (grievancesLoaded) {
-            renderFilteredGrievances();
-        }
-    });
-}
-
-if (filterAssignment) {
-    filterAssignment.addEventListener("change", function () {
-
-        if (grievancesLoaded) {
-            renderFilteredGrievances();
-        }
-    });
-}
-
-if (searchGrievanceId) {
-    searchGrievanceId.addEventListener("input", function () {
-
-        if (grievancesLoaded) {
-            renderFilteredGrievances();
-        }
-    });
+    applyGrievanceFilters.addEventListener(
+        "click",
+        applyAdminGrievanceFilters
+    );
 }
 
 
-// Clear the filters without changing the stored grievance records.
+// Clear Filters button.
 if (clearGrievanceFilters) {
 
-    clearGrievanceFilters.addEventListener("click", function () {
+    clearGrievanceFilters.addEventListener(
+        "click",
+        function () {
 
-        if (filterStatus) {
-            filterStatus.value = "ALL";
-        }
+            if (filterStatus) {
+                filterStatus.value = "ALL";
+            }
 
-        if (filterAssignment) {
-            filterAssignment.value = "ALL";
-        }
+            if (filterAssignment) {
+                filterAssignment.value = "ALL";
+            }
 
-        if (searchGrievanceId) {
-            searchGrievanceId.value = "";
-        }
+            if (searchGrievanceId) {
+                searchGrievanceId.value = "";
+            }
 
-        if (grievancesLoaded) {
-            renderFilteredGrievances();
+            if (adminGrievancesLoaded) {
+
+                // Restore every loaded grievance.
+                allGrievancesList.replaceChildren();
+
+                adminGrievancesCache.forEach(
+                    function (grievance) {
+
+                        allGrievancesList.appendChild(
+                            renderAdminGrievanceCard(grievance)
+                        );
+                    }
+                );
+
+                if (grievanceFilterCount) {
+
+                    grievanceFilterCount.textContent =
+                        "Showing " +
+                        adminGrievancesCache.length +
+                        " of " +
+                        adminGrievancesCache.length +
+                        " grievances.";
+                }
+
+            } else {
+
+                allGrievancesList.textContent =
+                    "Click View All Grievances to load records.";
+
+                if (grievanceFilterCount) {
+                    grievanceFilterCount.textContent = "";
+                }
+            }
         }
-    });
+    );
 }
 
 
