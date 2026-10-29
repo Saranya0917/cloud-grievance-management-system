@@ -1086,77 +1086,101 @@ if (grievanceDetailsForm && document.getElementById("grievanceDetails")) {
 // ==========================================
 
 async function loadStudentDashboardSummary() {
-const totalElement = document.getElementById("myGrievancesCount");
-const progressElement = document.getElementById("studentInProgressCount");
-const resolvedElement = document.getElementById("studentResolvedCount");
+    const totalElement = document.getElementById("myGrievancesCount");
+    const submittedElement = document.getElementById("studentSubmittedCount");
+    const progressElement = document.getElementById("studentInProgressCount");
+    const resolvedElement = document.getElementById("studentResolvedCount");
 
-
-// Run only on pages containing the student summary cards.
-if (!totalElement || !progressElement || !resolvedElement) {
-    return;
-}
-
-const userEmail = localStorage.getItem("userEmail");
-
-if (!userEmail) {
-    totalElement.textContent = "0";
-    progressElement.textContent = "0";
-    resolvedElement.textContent = "0";
-    console.error("Student email not found. Please log in again.");
-    return;
-}
-
-try {
-    const response = await fetch(
-        API_BASE_URL + "/grievances/my",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                user_id: userEmail
-            })
-        }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(
-            data.message || "Unable to load dashboard summary."
-        );
+    // Run only on pages containing the student summary cards.
+    if (
+        !totalElement ||
+        !submittedElement ||
+        !progressElement ||
+        !resolvedElement
+    ) {
+        return;
     }
 
-    const grievances = Array.isArray(data.grievances)
-        ? data.grievances
-        : [];
+    const userEmail = localStorage.getItem("userEmail");
 
-    const normalizeStatus = status =>
-        String(status || "")
-            .trim()
-            .toUpperCase()
-            .replace(/[\s-]+/g, "_");
+    if (!userEmail) {
+        totalElement.textContent = "0";
+        submittedElement.textContent = "0";
+        progressElement.textContent = "0";
+        resolvedElement.textContent = "0";
 
-    totalElement.textContent = grievances.length;
+        console.error("Student email not found. Please log in again.");
+        return;
+    }
 
-    progressElement.textContent = grievances.filter(
-        grievance => normalizeStatus(grievance.status) === "IN_PROGRESS"
-    ).length;
+    try {
+        const response = await fetch(
+            API_BASE_URL + "/grievances/my",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: userEmail
+                })
+            }
+        );
 
-    resolvedElement.textContent = grievances.filter(
-        grievance => normalizeStatus(grievance.status) === "RESOLVED"
-    ).length;
+        const data = await response.json();
 
-} catch (error) {
-    console.error("Student dashboard summary error:", error);
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Unable to load dashboard summary."
+            );
+        }
 
-    totalElement.textContent = "—";
-    progressElement.textContent = "—";
-    resolvedElement.textContent = "—";
-}
+        const grievances = Array.isArray(data.grievances)
+            ? data.grievances
+            : [];
 
+        const normalizeStatus = status =>
+            String(status || "")
+                .trim()
+                .toUpperCase()
+                .replace(/[\s-]+/g, "_");
 
+        // Total grievances
+        totalElement.textContent = grievances.length;
+
+        // Submitted grievances
+        submittedElement.textContent = grievances.filter(
+            grievance =>
+                normalizeStatus(grievance.status) === "SUBMITTED"
+        ).length;
+
+        // In-progress grievances
+        progressElement.textContent = grievances.filter(
+            grievance =>
+                normalizeStatus(grievance.status) === "IN_PROGRESS"
+        ).length;
+
+        // Resolved grievances
+        resolvedElement.textContent = grievances.filter(
+            grievance =>
+                normalizeStatus(grievance.status) === "RESOLVED"
+        ).length;
+
+        console.log("Student dashboard summary:", {
+            total: totalElement.textContent,
+            submitted: submittedElement.textContent,
+            inProgress: progressElement.textContent,
+            resolved: resolvedElement.textContent
+        });
+
+    } catch (error) {
+        console.error("Student dashboard summary error:", error);
+
+        totalElement.textContent = "—";
+        submittedElement.textContent = "—";
+        progressElement.textContent = "—";
+        resolvedElement.textContent = "—";
+    }
 }
 
 document.addEventListener("DOMContentLoaded", loadStudentDashboardSummary);
