@@ -1090,7 +1090,7 @@ const totalElement = document.getElementById("myGrievancesCount");
 const progressElement = document.getElementById("studentInProgressCount");
 const resolvedElement = document.getElementById("studentResolvedCount");
 
-```
+
 // Run only on pages containing the student summary cards.
 if (!totalElement || !progressElement || !resolvedElement) {
     return;
@@ -1155,7 +1155,7 @@ try {
     progressElement.textContent = "—";
     resolvedElement.textContent = "—";
 }
-```
+
 
 }
 
