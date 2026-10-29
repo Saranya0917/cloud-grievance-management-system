@@ -1081,3 +1081,82 @@ if (grievanceDetailsForm && document.getElementById("grievanceDetails")) {
         }
     });
 }
+// ==========================================
+// STUDENT DASHBOARD SUMMARY CARDS
+// ==========================================
+
+async function loadStudentDashboardSummary() {
+const totalElement = document.getElementById("myGrievancesCount");
+const progressElement = document.getElementById("studentInProgressCount");
+const resolvedElement = document.getElementById("studentResolvedCount");
+
+```
+// Run only on pages containing the student summary cards.
+if (!totalElement || !progressElement || !resolvedElement) {
+    return;
+}
+
+const userEmail = localStorage.getItem("userEmail");
+
+if (!userEmail) {
+    totalElement.textContent = "0";
+    progressElement.textContent = "0";
+    resolvedElement.textContent = "0";
+    console.error("Student email not found. Please log in again.");
+    return;
+}
+
+try {
+    const response = await fetch(
+        API_BASE_URL + "/grievances/my",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                user_id: userEmail
+            })
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(
+            data.message || "Unable to load dashboard summary."
+        );
+    }
+
+    const grievances = Array.isArray(data.grievances)
+        ? data.grievances
+        : [];
+
+    const normalizeStatus = status =>
+        String(status || "")
+            .trim()
+            .toUpperCase()
+            .replace(/[\s-]+/g, "_");
+
+    totalElement.textContent = grievances.length;
+
+    progressElement.textContent = grievances.filter(
+        grievance => normalizeStatus(grievance.status) === "IN_PROGRESS"
+    ).length;
+
+    resolvedElement.textContent = grievances.filter(
+        grievance => normalizeStatus(grievance.status) === "RESOLVED"
+    ).length;
+
+} catch (error) {
+    console.error("Student dashboard summary error:", error);
+
+    totalElement.textContent = "—";
+    progressElement.textContent = "—";
+    resolvedElement.textContent = "—";
+}
+```
+
+}
+
+document.addEventListener("DOMContentLoaded", loadStudentDashboardSummary);
