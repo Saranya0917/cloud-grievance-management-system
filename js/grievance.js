@@ -142,6 +142,88 @@ if (loadGrievancesButton) {
 // ==========================================
 
 // View Assigned Grievances
+// ==========================================
+// LOAD STAFF DASHBOARD SUMMARY AUTOMATICALLY
+// ==========================================
+
+async function loadStaffDashboardSummary() {
+
+    const totalElement = document.getElementById("totalAssignedCount");
+    const progressElement = document.getElementById("inProgressCount");
+    const resolvedElement = document.getElementById("resolvedCount");
+
+    // Run only on pages containing the staff summary cards.
+    if (!totalElement || !progressElement || !resolvedElement) {
+        return;
+    }
+
+    const staffId = localStorage.getItem("userEmail");
+
+    if (!staffId) {
+        console.error("Staff email not found. Please log in again.");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            API_BASE_URL +
+            "/grievances/assigned?staff_id=" +
+            encodeURIComponent(staffId),
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Unable to load staff dashboard summary."
+            );
+        }
+
+        const grievances = Array.isArray(data.grievances)
+            ? data.grievances
+            : [];
+
+        const normalizeStatus = status =>
+            String(status || "")
+                .trim()
+                .toUpperCase()
+                .replace(/[\s-]+/g, "_");
+
+        // Total assigned grievances
+        totalElement.textContent = grievances.length;
+
+        // Grievances currently in progress
+        progressElement.textContent = grievances.filter(
+            grievance => normalizeStatus(grievance.status) === "IN_PROGRESS"
+        ).length;
+
+        // Resolved grievances
+        resolvedElement.textContent = grievances.filter(
+            grievance => normalizeStatus(grievance.status) === "RESOLVED"
+        ).length;
+
+    } catch (error) {
+
+        console.error("Staff dashboard summary error:", error);
+
+        totalElement.textContent = "—";
+        progressElement.textContent = "—";
+        resolvedElement.textContent = "—";
+    }
+}
+
+// Load counts automatically when the page opens.
+document.addEventListener(
+    "DOMContentLoaded",
+    loadStaffDashboardSummary
+);
 
 const loadAssignedButton =
     document.getElementById("loadAssignedGrievances");
