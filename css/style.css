@@ -933,3 +933,72 @@ body:has(.container) {
         font-size: 24px;
     }
 }
+/* ==========================================
+   REGISTRATION PAGE - SIZE FIX
+   ========================================== */
+
+body:has(#registerForm) {
+    background: #F4F8FB;
+}
+
+#registerForm {
+    max-width: 480px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #FFFFFF;
+    border: 1px solid #D7E5F2;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+#registerForm h1,
+#registerForm h2 {
+    color: #1E4F7A;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+#registerForm label {
+    display: block;
+    margin-bottom: 7px;
+    color: #243B53;
+    font-weight: 600;
+}
+
+#registerForm input {
+    display: block;
+    width: 100%;
+    padding: 11px 12px;
+    margin-top: 6px;
+    margin-bottom: 18px;
+    border: 1px solid #C7D9E8;
+    border-radius: 7px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#registerForm button,
+#registerForm input[type="submit"] {
+    width: auto;
+    min-width: 100px;
+    padding: 10px 20px;
+    background: #1E4F7A;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#registerForm button:hover,
+#registerForm input[type="submit"]:hover {
+    background: #163B5C;
+}
+
+@media (max-width: 600px) {
+    #registerForm {
+        width: calc(100% - 30px);
+        padding: 22px;
+    }
+}
